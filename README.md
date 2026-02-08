@@ -20,4 +20,8 @@ py -m venv .venv
 1. go to the link provided after running the server, then add "/docs"
 2. You should be able to see all Get and Pull functions. To test a function, expand it and hit "Try it out"
 3. Type the header, which is the spot(s) you'd like to change the status of, then edit the JSON response below it.
-4. 
+Headers:
+U1, U2, L1, L2
+JSON Response Fields:
+confidence: 0-1.0
+status: "occupied:, "empty", "unknown"
