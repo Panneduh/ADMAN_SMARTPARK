@@ -26,7 +26,7 @@ uvicorn main:app --reload
 ---
 
 Headers:
-to view headers, go to the link given after running, and add "/spots" (U1-01, U1-02, etc.)
+- to view headers, go to the link given after running, and add "/spots" (U1-01, U1-02, etc.)
 JSON Response Fields:
-confidence: 0-1.0
-status: "occupied:, "empty", "unknown"
+- confidence: 0-1.0
+- status: "occupied:, "empty", "unknown"
