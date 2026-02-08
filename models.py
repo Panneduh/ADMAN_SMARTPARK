@@ -1,7 +1,7 @@
 # models.py
 # This file defines the database tables (ORM models) for spots, current spot state, and history events.
 
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Index  # SQL columns/types/indexes.
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Index, Boolean  # SQL columns/types/indexes.
 from sqlalchemy.sql import func  # SQL functions like NOW() for timestamps.
 from sqlalchemy.orm import relationship  # ORM relationship helpers.
 from db import Base  # Import the shared Base class.
@@ -12,6 +12,7 @@ class Spot(Base):
     id = Column(Integer, primary_key=True, index=True)  # Primary key id with index.
     label = Column(String, unique=True, index=True, nullable=False)  # Unique human label like "U1".
     cluster = Column(String, index=True, nullable=False)  # Cluster/group name like "upper_center".
+    is_handicapped = Column(Boolean, default=False, nullable=False)  # Whether this spot is handicapped.
 
     x1 = Column(Float, nullable=False)  # Bounding box left x.
     y1 = Column(Float, nullable=False)  # Bounding box top y.

@@ -37,6 +37,7 @@ class SpotOut(BaseModel):
     y2: float
     status: Status  # Current status.
     confidence: Optional[float] = None  # Optional confidence.
+    is_handicapped: bool  # Whether this spot is handicapped.
 
 class UpdateSpotStateIn(BaseModel):
     # Request model for updating one spot.
@@ -104,6 +105,7 @@ def list_spots(
             x2=spot.x2, y2=spot.y2,
             status=state.status,            # Current state status.
             confidence=state.confidence,    # Current confidence.
+            is_handicapped=spot.is_handicapped,  # Whether this spot is handicapped.
         )
         for (spot, state) in rows
     ]
@@ -132,6 +134,7 @@ def get_spot(label: str, db: Session = Depends(get_db)):
         x2=spot.x2, y2=spot.y2,
         status=state.status,
         confidence=state.confidence,
+        is_handicapped=spot.is_handicapped,  # Whether this spot is handicapped.
     )
 
 @app.put("/spots/{label}/state")

@@ -12,12 +12,57 @@ def create_tables() -> None:
 def seed_spots(session: Session) -> dict:
     # Example spot inventory. Replace these with your real labels/clusters/coords.
     # Each dict describes one physical spot in your lot.
-    spot_defs = [
-        {"label": "U1", "cluster": "upper_center", "x1": 0.10, "y1": 0.10, "x2": 0.20, "y2": 0.20},
-        {"label": "U2", "cluster": "upper_center", "x1": 0.22, "y1": 0.10, "x2": 0.32, "y2": 0.20},
-        {"label": "L1", "cluster": "lower_center", "x1": 0.10, "y1": 0.30, "x2": 0.20, "y2": 0.40},
-        {"label": "L2", "cluster": "lower_center", "x1": 0.22, "y1": 0.30, "x2": 0.32, "y2": 0.40},
-    ]
+    # ---- Spot layout generation (40 total) ----
+    # Lower: 2 rows x 11 = 22
+    # Upper: row 1 -> 10 (3 handicapped), row 2 -> 8 (2 handicapped) = 18
+    spot_defs = []  # This list will hold dicts like {"label": "...", "cluster": "...", "x1":..., ...}
+
+    def add_row(cluster: str, labels: list[str], y1: float, y2: float, left_margin: float = 0.02, right_margin: float = 0.02):
+        """
+        Creates evenly spaced bounding boxes across a row using normalized coordinates (0.0 to 1.0).
+
+        cluster: which group/row this belongs to (used for filtering and UI layout)
+        labels: list of spot labels in left-to-right order
+        y1/y2: vertical bounds for the whole row
+        left_margin/right_margin: keep boxes away from the edges of the image
+        """
+        usable_width = 1.0 - left_margin - right_margin          # How much horizontal space we can use (0..1)
+        box_width = usable_width / len(labels)                   # Width of each spot box
+        for i, label in enumerate(labels):                       # i = position in row, label = spot label
+            x1 = left_margin + i * box_width                     # Left edge of this spot’s box
+            x2 = left_margin + (i + 1) * box_width               # Right edge of this spot’s box
+            spot_defs.append({                                   # Add one spot definition
+                "label": label,
+                "cluster": cluster,
+                "is_handicapped": ("-H" in label),  # Simple heuristic: if label contains "-H", mark as handicapped.
+                "x1": x1, "y1": y1,
+                "x2": x2, "y2": y2
+            })
+
+    # ---- LOWER LOT (2 rows of 11) ----
+    lower_row_1_labels = [f"L1-{i:02d}" for i in range(1, 12)]   # L1-01 ... L1-11
+    lower_row_2_labels = [f"L2-{i:02d}" for i in range(1, 12)]   # L2-01 ... L2-11
+
+    # Pick y-bands that make sense for your camera view (placeholders you’ll tune later)
+    add_row("lower_row_1", lower_row_1_labels, y1=0.70, y2=0.78)
+    add_row("lower_row_2", lower_row_2_labels, y1=0.80, y2=0.88)
+
+    # ---- UPPER LOT (10 + 8) ----
+    # Upper row 1: 10 total, first 3 are handicapped
+    upper_row_1_labels = [f"U1-H{i:02d}" for i in range(1, 4)] + [f"U1-{i:02d}" for i in range(1, 8)]
+    # That yields: U1-H01,U1-H02,U1-H03, U1-01..U1-07 (3 + 7 = 10)
+
+    # Upper row 2: 8 total, first 2 are handicapped
+    upper_row_2_labels = [f"U2-H{i:02d}" for i in range(1, 3)] + [f"U2-{i:02d}" for i in range(1, 7)]
+    # That yields: U2-H01,U2-H02, U2-01..U2-06 (2 + 6 = 8)
+
+    add_row("upper_row_1", upper_row_1_labels, y1=0.20, y2=0.28)
+    add_row("upper_row_2", upper_row_2_labels, y1=0.10, y2=0.18)
+
+    # Sanity check: total spot count should be 40
+    assert len(spot_defs) == 40, f"Expected 40 spots, got {len(spot_defs)}"
+    # ---- End spot layout generation ----
+
 
     created_spots = 0  # Track how many new Spot rows we create.
     created_states = 0  # Track how many new SpotState rows we create.

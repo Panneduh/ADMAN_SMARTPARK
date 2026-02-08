@@ -14,6 +14,8 @@ The “database” is a local SQLite file created automatically.
 **Windows PowerShell**
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
+pip install requirements.txt
+uvicorn main:app --reload
 
 ## How to Test Functionality
 
@@ -24,7 +26,7 @@ py -m venv .venv
 ---
 
 Headers:
-U1, U2, L1, L2
+to view headers, go to the link given after running, and add "/spots" (U1-01, U1-02, etc.)
 JSON Response Fields:
 confidence: 0-1.0
 status: "occupied:, "empty", "unknown"
