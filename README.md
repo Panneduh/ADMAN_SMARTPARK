@@ -7,6 +7,17 @@ The goal is to reduce the time drivers spend searching for parking by automatica
 
 ---
 
+## Project Structure
+
+blank_lot/
+Contains images of the empty parking lot used to define parking spaces.
+
+current_lot/
+Contains images of the current parking lot with vehicles present.
+
+Tests/
+Testing scripts and experiments for the parking detection algorithm.
+
 ## Key Components
 
 ### ROI Labeler
