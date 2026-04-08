@@ -10,7 +10,7 @@ The goal is to reduce the time drivers spend searching for parking by automatica
 ## Project Structure
 
 blank_lot/
-Contains images of the empty parking lot used to define parking spaces.
+Contains images of the empty parking lot used to define parking spaces. :D
 
 current_lot/
 Contains images of the current parking lot with vehicles present.
