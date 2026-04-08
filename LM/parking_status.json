@@ -1,0 +1,123 @@
+{
+  "timestamp": 1775629794.7588923,
+  "image_used": "LM\\current_lot\\camera-pi-1_1775629791.jpg",
+  "blank_used": "LM\\blank_lot\\empty1.webp",
+  "vehicle_classes": [
+    "car",
+    "truck"
+  ],
+  "bbox_shrink": 0.6,
+  "free_count": 37,
+  "used_count": 3,
+  "free_ids": [
+    "PS1",
+    "PS2",
+    "PS3",
+    "PS4",
+    "PS5",
+    "PS7",
+    "PS8",
+    "PS10",
+    "PS11",
+    "PS12",
+    "PS13",
+    "PS14",
+    "PS16",
+    "PS17",
+    "PS18",
+    "PS19",
+    "PS20",
+    "PS21",
+    "PS22",
+    "PS23",
+    "PS24",
+    "PS25",
+    "PS26",
+    "PS27",
+    "PS28",
+    "PS29",
+    "PS30",
+    "PS31",
+    "PS32",
+    "PS33",
+    "PS34",
+    "PS35",
+    "PS36",
+    "PS37",
+    "PS38",
+    "PS39",
+    "PS40"
+  ],
+  "used_ids": [
+    "PS6",
+    "PS9",
+    "PS15"
+  ],
+  "free_accessible_ids": [
+    "PS30",
+    "PS31",
+    "PS32",
+    "PS39",
+    "PS40"
+  ],
+  "used_accessible_ids": [],
+  "detections": [
+    {
+      "class": "car",
+      "conf": 0.5366997718811035,
+      "bbox": [
+        552,
+        404,
+        653,
+        499
+      ]
+    },
+    {
+      "class": "car",
+      "conf": 0.3111329674720764,
+      "bbox": [
+        1172,
+        490,
+        1281,
+        619
+      ]
+    },
+    {
+      "class": "truck",
+      "conf": 0.2920849621295929,
+      "bbox": [
+        1387,
+        210,
+        1449,
+        253
+      ]
+    },
+    {
+      "class": "truck",
+      "conf": 0.2612307071685791,
+      "bbox": [
+        758,
+        454,
+        882,
+        684
+      ]
+    },
+    {
+      "class": "truck",
+      "conf": 0.21566137671470642,
+      "bbox": [
+        1172,
+        490,
+        1284,
+        619
+      ]
+    }
+  ],
+  "roi": [
+    146,
+    104,
+    1555,
+    692
+  ],
+  "roi_scale": 1.8
+}

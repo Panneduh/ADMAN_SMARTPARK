@@ -1,4 +1,3 @@
-# db.py
 # This file sets up the SQLAlchemy engine, session factory, and Base class.
 
 from sqlalchemy import create_engine  # Imports SQLAlchemy engine creator (connects to DB).

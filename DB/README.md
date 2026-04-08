@@ -14,7 +14,7 @@ The “database” is a local SQLite file created automatically.
 **Windows PowerShell**
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install requirements.txt
+pip install -rrequirements.txt
 uvicorn main:app --reload
 
 ## How to Test Functionality
