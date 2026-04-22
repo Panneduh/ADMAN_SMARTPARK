@@ -12,27 +12,27 @@ export default function ParkingSelectionPage() {
     {
       name: "Central Parking Lot",
       image: "/parking/central-lot.png",
-      path: null,
+      path: "/coming-soon",
     },
     {
       name: "Scheidt Family Performing Arts Center Lot",
       image: "/parking/scheidt-lot.png",
-      path: null,
+      path: "/coming-soon",
     },
     {
       name: "Zach H. Curlin Lot",
       image: "/parking/curlin-lot.png",
-      path: null,
+      path: "/coming-soon",
     },
     {
       name: "General Parking for Track",
       image: "/parking/track-lot.png",
-      path: null,
+      path: "/coming-soon",
     },
     {
       name: "Wellness Center Parking Lot",
       image: "/parking/wellness-lot.png",
-      path: null,
+      path: "/coming-soon",
     },
   ];
 
@@ -88,14 +88,8 @@ export default function ParkingSelectionPage() {
           {parkingLots.map((lot) => (
             <button
               key={lot.name}
-              onClick={() => {
-                if (lot.path) navigate(lot.path);
-              }}
-              className={`group overflow-hidden rounded-[1.75rem] border border-[#E6C4B7] bg-white text-left shadow-sm transition duration-300 ${
-                lot.path
-                  ? "hover:-translate-y-1 hover:shadow-lg"
-                  : "cursor-not-allowed opacity-80"
-              }`}
+              onClick={() => navigate(lot.path)}
+              className="group overflow-hidden rounded-[1.75rem] border border-[#E6C4B7] bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="relative h-56 overflow-hidden bg-[#B7DDDA]">
                 <img
