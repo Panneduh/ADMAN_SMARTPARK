@@ -40,18 +40,16 @@ export default function ParkingSelectionPage() {
     <div className="min-h-screen bg-[#F2ECE1] text-[#6F4A2E]">
       <header className="border-b border-[#E6C4B7] bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex min-h-[88px] max-w-7xl items-center justify-center px-6 lg:px-10">
-          <div className="flex items-center gap-3">
-            <img
-              src="/uofm-logo.jpg"
-              alt="University of Memphis Logo"
-              className="h-16 w-auto object-contain"
-            />
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 rounded-xl transition hover:scale-[1.02] cursor-pointer"
+          >
             <img
               src="/adman-logo.png"
               alt="ADMAN Logo"
               className="h-16 w-auto object-contain"
             />
-            <div className="flex flex-col justify-center leading-tight">
+            <div className="flex flex-col justify-center leading-tight text-left">
               <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
                 ADMAN
               </p>
@@ -59,7 +57,7 @@ export default function ParkingSelectionPage() {
                 Technologies
               </p>
             </div>
-          </div>
+          </button>
         </div>
       </header>
 

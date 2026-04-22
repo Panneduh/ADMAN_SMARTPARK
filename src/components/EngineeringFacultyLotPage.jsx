@@ -628,24 +628,30 @@ export default function EngineeringFacultyLotPage() {
         <div className="mx-auto flex min-h-[88px] max-w-7xl items-center justify-between px-6 lg:px-10">
           <div className="flex items-center gap-3">
             <img
-              src="/uofm-logo.jpg"
-              alt="University of Memphis Logo"
-              className="h-16 w-auto object-contain"
-            />
-            <img
-              src="/adman-logo.png"
-              alt="ADMAN Logo"
-              className="h-16 w-auto object-contain"
-            />
-            <div className="flex flex-col justify-center leading-tight">
-              <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
-                ADMAN
-              </p>
-              <p className="text-sm tracking-[0.2em] text-[#2F4F4F]">
-                Technologies
-              </p>
+                src="/uofm-logo.jpg"
+                alt="University of Memphis Logo"
+                className="h-16 w-auto object-contain"
+              />
+
+            <button
+                onClick={() => navigate("/")}
+                className="flex items-center gap-2 rounded-xl transition hover:scale-[1.02] cursor-pointer"
+              >
+                <img
+                  src="/adman-logo.png"
+                  alt="ADMAN Logo"
+                  className="h-16 w-auto object-contain"
+                />
+                <div className="flex flex-col justify-center leading-tight text-left">
+                  <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
+                    ADMAN
+                  </p>
+                  <p className="text-sm tracking-[0.2em] text-[#2F4F4F]">
+                    Technologies
+                  </p>
+                </div>
+              </button>
             </div>
-          </div>
 
           <div className="text-right">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#003087]">

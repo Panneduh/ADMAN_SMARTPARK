@@ -40,13 +40,16 @@ export default function MeetTheTeamPage() {
     <div className="min-h-screen bg-[#F2ECE1] text-[#2F4F4F]">
       <header className="border-b border-[#E6C4B7] bg-[#F2ECE1]/90 backdrop-blur-sm">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 cursor-pointer transition hover:scale-[1.03]"
+          >
             <img
               src="/adman-logo.png"
               alt="ADMAN Logo"
               className="h-16 w-auto object-contain"
             />
-            <div className="flex flex-col justify-center leading-tight">
+            <div className="flex flex-col justify-center leading-tight text-left">
               <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
                 ADMAN
               </p>
@@ -54,7 +57,7 @@ export default function MeetTheTeamPage() {
                 Technologies
               </p>
             </div>
-          </div>
+          </button>
 
           <nav className="hidden items-center gap-3 md:flex">
             <button
