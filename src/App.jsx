@@ -6,6 +6,7 @@ import AboutUsPage from "./components/AboutUsPage";
 import MeetTheTeamPage from "./components/MeetTheTeamPage";
 import FutureImplementationPage from "./components/FutureImplementationPage";
 import GalleryPage from "./components/GalleryPage";
+import ComingSoonPage from "./pages/ComingSoonPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/select-lot" element={<ParkingSelectionPage />} />
         <Route path="/future" element={<FutureImplementationPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/coming-soon" element={<ComingSoonPage />} />
 
         <Route
           path="/lot/engineering-faculty"

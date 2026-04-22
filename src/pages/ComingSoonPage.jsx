@@ -17,20 +17,20 @@ export default function ComingSoonPage() {
 
   return (
     <div className="min-h-screen bg-[#F2ECE1] text-[#6F4A2E] flex flex-col">
+      
+      {/* HEADER */}
       <header className="border-b border-[#E6C4B7] bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex min-h-[88px] max-w-7xl items-center justify-center px-6 lg:px-10">
-          <div className="flex items-center gap-3">
-            <img
-              src="/uofm-logo.jpg"
-              alt="University of Memphis Logo"
-              className="h-16 w-auto object-contain"
-            />
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 cursor-pointer transition hover:scale-[1.03]"
+          >
             <img
               src="/adman-logo.png"
               alt="ADMAN Logo"
               className="h-16 w-auto object-contain"
             />
-            <div className="flex flex-col justify-center leading-tight">
+            <div className="flex flex-col justify-center leading-tight text-left">
               <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
                 ADMAN
               </p>
@@ -38,22 +38,35 @@ export default function ComingSoonPage() {
                 Technologies
               </p>
             </div>
-          </div>
+          </button>
         </div>
       </header>
 
+      {/* MAIN */}
       <main className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 rounded-[2rem] border border-[#E6C4B7] bg-white p-8 shadow-md md:grid-cols-2 md:p-14">
-          <div className="flex justify-center">
-            <div className="flex h-[320px] w-[320px] items-center justify-center rounded-full bg-[#B7DDDA] shadow-inner md:h-[390px] md:w-[390px]">
+
+          {/* LEFT SIDE → BIG CIRCLE LOGO */}
+          <div className="flex flex-col items-center justify-center text-center">
+            
+            <div className="flex h-[260px] w-[260px] items-center justify-center rounded-full bg-[#2F5D73]/10 shadow-inner">
               <img
                 src="/adman-logo.png"
-                alt="ADMAN Logo Icon"
-                className="h-[250px] w-[250px] object-contain md:h-[310px] md:w-[310px]"
+                alt="ADMAN Logo"
+                className="h-[140px] w-auto object-contain"
               />
             </div>
+
+            <p className="mt-6 text-lg font-semibold tracking-[0.25em] text-[#2F4F4F]">
+              ADMAN
+            </p>
+            <p className="text-sm tracking-[0.2em] text-[#2F4F4F]">
+              Technologies
+            </p>
+
           </div>
 
+          {/* RIGHT SIDE → TEXT */}
           <div className="text-center md:text-left">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#003087]">
               University of Memphis
@@ -100,6 +113,7 @@ export default function ComingSoonPage() {
               </button>
             </div>
           </div>
+
         </div>
       </main>
     </div>
