@@ -5,49 +5,15 @@ const API_BASE = "http://18.218.74.121";
 const LIVE_IMAGE_URL = `${API_BASE}/latest-lot-image`;
 const FALLBACK_LIVE_IMAGE = "/parking/engineering-live-view.png";
 const WS_BASE = "ws://18.218.74.121";
+const SPOT_REFRESH_INTERVAL = 10000;
 
 const WEATHER_URL =
   "https://api.open-meteo.com/v1/forecast?latitude=35.1495&longitude=-90.049&current=temperature_2m,weather_code,is_day&temperature_unit=fahrenheit&timezone=America%2FChicago";
 
 const LOT_LAYOUT = {
-  front: [
-    "PS1",
-    "PS2",
-    "PS3",
-    "PS4",
-    "PS5",
-    "PS6",
-    "PS7",
-    "PS8",
-    "PS9",
-    "PS10",
-    "PS11",
-  ],
-  middle: [
-    "PS12",
-    "PS13",
-    "PS14",
-    "PS15",
-    "PS16",
-    "PS17",
-    "PS18",
-    "PS19",
-    "PS20",
-    "PS21",
-    "PS22",
-  ],
-  upper: [
-    "PS23",
-    "PS24",
-    "PS25",
-    "PS26",
-    "PS27",
-    "PS28",
-    "PS29",
-    "PS30",
-    "PS31",
-    "PS32",
-  ],
+  front: ["PS1", "PS2", "PS3", "PS4", "PS5", "PS6", "PS7", "PS8", "PS9", "PS10", "PS11"],
+  middle: ["PS12", "PS13", "PS14", "PS15", "PS16", "PS17", "PS18", "PS19", "PS20", "PS21", "PS22"],
+  upper: ["PS23", "PS24", "PS25", "PS26", "PS27", "PS28", "PS29", "PS30", "PS31", "PS32"],
   backTop: ["PS33", "PS34", "PS35", "PS36", "PS37", "PS38", "PS39", "PS40"],
 };
 
@@ -93,14 +59,10 @@ function computeDirections(selectedSpot) {
   return steps;
 }
 
-
 function buildRoutePoints(selectedSpot, selectedPosition) {
   if (!selectedSpot || !selectedPosition) return [];
 
-  // Start around the "T" of the GATE sign
   const gatePoint = { x: 28, y: 332 };
-
-  // Road centerlines
   const bottomRoadY = 332;
   const middleRoadY = 150;
   const topRoadY = 32;
@@ -108,13 +70,8 @@ function buildRoutePoints(selectedSpot, selectedPosition) {
 
   const tileCenterX = selectedPosition.x + selectedPosition.width / 2;
 
-  // Stop on the road in front of the tile, do NOT go into the tile
   if (selectedSpot.rowKey === "front") {
-    return [
-      gatePoint,
-      { x: leftConnectorX, y: bottomRoadY },
-      { x: tileCenterX, y: bottomRoadY },
-    ];
+    return [gatePoint, { x: leftConnectorX, y: bottomRoadY }, { x: tileCenterX, y: bottomRoadY }];
   }
 
   if (selectedSpot.rowKey === "middle") {
@@ -208,22 +165,12 @@ function getWeatherInfo(weatherCode, isDay) {
     51: { label: "Light Drizzle", icon: "🌦️" },
     53: { label: "Drizzle", icon: "🌦️" },
     55: { label: "Heavy Drizzle", icon: "🌧️" },
-    56: { label: "Freezing Drizzle", icon: "🌧️" },
-    57: { label: "Freezing Drizzle", icon: "🌧️" },
     61: { label: "Light Rain", icon: "🌦️" },
     63: { label: "Rain", icon: "🌧️" },
     65: { label: "Heavy Rain", icon: "🌧️" },
-    66: { label: "Freezing Rain", icon: "🌧️" },
-    67: { label: "Freezing Rain", icon: "🌧️" },
-    71: { label: "Light Snow", icon: "🌨️" },
-    73: { label: "Snow", icon: "🌨️" },
-    75: { label: "Heavy Snow", icon: "❄️" },
-    77: { label: "Snow Grains", icon: "❄️" },
     80: { label: "Rain Showers", icon: "🌦️" },
     81: { label: "Rain Showers", icon: "🌧️" },
     82: { label: "Heavy Showers", icon: "⛈️" },
-    85: { label: "Snow Showers", icon: "🌨️" },
-    86: { label: "Snow Showers", icon: "🌨️" },
     95: { label: "Thunderstorm", icon: "⛈️" },
     96: { label: "Thunderstorm", icon: "⛈️" },
     99: { label: "Thunderstorm", icon: "⛈️" },
@@ -234,7 +181,7 @@ function getWeatherInfo(weatherCode, isDay) {
 
 export default function EngineeringFacultyLotPage() {
   const navigate = useNavigate();
-  
+
   const [viewMode, setViewMode] = useState("map");
   const [selectedSpotId, setSelectedSpotId] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
@@ -243,6 +190,7 @@ export default function EngineeringFacultyLotPage() {
   const [apiError, setApiError] = useState("");
   const [liveImageOk, setLiveImageOk] = useState(true);
   const [liveImageTick, setLiveImageTick] = useState(Date.now());
+  const [movingCarPoint, setMovingCarPoint] = useState(null);
 
   const [weather, setWeather] = useState({
     temp: null,
@@ -256,19 +204,19 @@ export default function EngineeringFacultyLotPage() {
   const BASE_MAP_WIDTH = 980;
   const BASE_MAP_HEIGHT = 430;
 
-
-
-  const [movingCarPoint, setMovingCarPoint] = useState(null);
-
   useEffect(() => {
-    if (viewMode === "live") {
+    if (viewMode !== "live") return;
+
+    setLiveImageOk(true);
+    setLiveImageTick(Date.now());
+
+    const interval = setInterval(() => {
       setLiveImageOk(true);
       setLiveImageTick(Date.now());
-    }
+    }, SPOT_REFRESH_INTERVAL);
+
+    return () => clearInterval(interval);
   }, [viewMode]);
-
-  
-
 
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
@@ -294,13 +242,14 @@ export default function EngineeringFacultyLotPage() {
     return () => window.removeEventListener("resize", updateMapScale);
   }, []);
 
-  // Initial fetch so the page shows current spot states immediately.
   useEffect(() => {
     let active = true;
 
     async function loadSpots() {
       try {
-        const response = await fetch(`${API_BASE}/spots`);
+        const response = await fetch(`${API_BASE}/spots?t=${Date.now()}`, {
+          cache: "no-store",
+        });
 
         if (!response.ok) {
           throw new Error(`Failed to load spots: ${response.status}`);
@@ -324,12 +273,14 @@ export default function EngineeringFacultyLotPage() {
 
     loadSpots();
 
+    const interval = setInterval(loadSpots, SPOT_REFRESH_INTERVAL);
+
     return () => {
       active = false;
+      clearInterval(interval);
     };
   }, []);
 
-  // WebSocket for live updates after initial load.
   useEffect(() => {
     let socket = null;
     let reconnectTimer = null;
@@ -432,7 +383,10 @@ export default function EngineeringFacultyLotPage() {
 
     async function loadWeather() {
       try {
-        const response = await fetch(WEATHER_URL);
+        const response = await fetch(`${WEATHER_URL}&t=${Date.now()}`, {
+          cache: "no-store",
+        });
+
         if (!response.ok) {
           throw new Error(`Failed to load weather: ${response.status}`);
         }
@@ -471,24 +425,17 @@ export default function EngineeringFacultyLotPage() {
     };
   }, []);
 
-
-
   const statusMap = useMemo(() => {
     const map = new Map();
 
     for (const spot of apiSpots) {
-      map.set(
-        spot.label,
-        spot.status === "occupied" ? "occupied" : "empty"
-      );
+      map.set(spot.label, spot.status === "occupied" ? "occupied" : "empty");
     }
 
     return map;
   }, [apiSpots]);
 
-  const structuredRows = useMemo(() => {
-    return buildStructuredRows(statusMap);
-  }, [statusMap]);
+  const structuredRows = useMemo(() => buildStructuredRows(statusMap), [statusMap]);
 
   const allStructuredSpots = useMemo(
     () =>
@@ -504,10 +451,7 @@ export default function EngineeringFacultyLotPage() {
   const selectedSpot =
     allStructuredSpots.find((spot) => spot.id === selectedSpotId) || null;
 
-  const directions = useMemo(
-    () => computeDirections(selectedSpot),
-    [selectedSpot]
-  );
+  const directions = useMemo(() => computeDirections(selectedSpot), [selectedSpot]);
 
   const stats = useMemo(() => {
     const free = allStructuredSpots.filter((s) => s.status === "empty").length;
@@ -563,10 +507,18 @@ export default function EngineeringFacultyLotPage() {
     if (index < 0) return null;
 
     const width =
-      selectedSpot.rowKey === "backTop" ? 34 : selectedSpot.rowKey === "upper" ? 40 : 42;
+      selectedSpot.rowKey === "backTop"
+        ? 34
+        : selectedSpot.rowKey === "upper"
+        ? 40
+        : 42;
 
     const height =
-      selectedSpot.rowKey === "backTop" ? 48 : selectedSpot.rowKey === "upper" ? 56 : 60;
+      selectedSpot.rowKey === "backTop"
+        ? 48
+        : selectedSpot.rowKey === "upper"
+        ? 56
+        : 60;
 
     const gap = rowGapMap[selectedSpot.rowKey];
     const startX = rowStartMap[selectedSpot.rowKey];
@@ -580,7 +532,6 @@ export default function EngineeringFacultyLotPage() {
     () => buildRoutePoints(selectedSpot, selectedPosition),
     [selectedSpot, selectedPosition]
   );
-
 
   useEffect(() => {
     if (!selectedSpotId || viewMode !== "map" || routePoints.length < 2) {
@@ -605,9 +556,7 @@ export default function EngineeringFacultyLotPage() {
       const cycleProgress = (elapsed % cycleTime) / cycleTime;
 
       const routeProgress =
-        cycleProgress <= 0.5
-          ? cycleProgress * 2
-          : (1 - cycleProgress) * 2;
+        cycleProgress <= 0.5 ? cycleProgress * 2 : (1 - cycleProgress) * 2;
 
       const point = getPointAlongRoute(routePoints, routeProgress);
       setMovingCarPoint(point);
@@ -628,30 +577,30 @@ export default function EngineeringFacultyLotPage() {
         <div className="mx-auto flex min-h-[88px] max-w-7xl items-center justify-between px-6 lg:px-10">
           <div className="flex items-center gap-3">
             <img
-                src="/uofm-logo.jpg"
-                alt="University of Memphis Logo"
-                className="h-16 w-auto object-contain"
-              />
+              src="/uofm-logo.jpg"
+              alt="University of Memphis Logo"
+              className="h-16 w-auto object-contain"
+            />
 
             <button
-                onClick={() => navigate("/")}
-                className="flex items-center gap-2 rounded-xl transition hover:scale-[1.02] cursor-pointer"
-              >
-                <img
-                  src="/adman-logo.png"
-                  alt="ADMAN Logo"
-                  className="h-16 w-auto object-contain"
-                />
-                <div className="flex flex-col justify-center leading-tight text-left">
-                  <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
-                    ADMAN
-                  </p>
-                  <p className="text-sm tracking-[0.2em] text-[#2F4F4F]">
-                    Technologies
-                  </p>
-                </div>
-              </button>
-            </div>
+              onClick={() => navigate("/")}
+              className="flex cursor-pointer items-center gap-2 rounded-xl transition hover:scale-[1.02]"
+            >
+              <img
+                src="/adman-logo.png"
+                alt="ADMAN Logo"
+                className="h-16 w-auto object-contain"
+              />
+              <div className="flex flex-col justify-center leading-tight text-left">
+                <p className="text-base font-semibold tracking-[0.28em] text-[#2F4F4F]">
+                  ADMAN
+                </p>
+                <p className="text-sm tracking-[0.2em] text-[#2F4F4F]">
+                  Technologies
+                </p>
+              </div>
+            </button>
+          </div>
 
           <div className="text-right">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#003087]">
@@ -720,7 +669,9 @@ export default function EngineeringFacultyLotPage() {
                   Engineering Faculty Lot
                 </p>
                 {loading && (
-                  <p className="mt-2 text-sm text-[#6A7C87]">Loading live status…</p>
+                  <p className="mt-2 text-sm text-[#6A7C87]">
+                    Loading live status…
+                  </p>
                 )}
                 {apiError && (
                   <p className="mt-2 text-sm text-[#C65B57]">{apiError}</p>
@@ -759,32 +710,21 @@ export default function EngineeringFacultyLotPage() {
               >
                 {viewMode === "map" ? (
                   <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                    <div
-                      className="relative w-full h-full"
-                      >
-                      
+                    <div className="relative h-full w-full">
                       <img
                         src="/parking/real-lot.png"
-                        className="absolute inset-0 h-full w-full object-cover rounded-[1.5rem]"
+                        alt="Engineering Faculty Lot Map"
+                        className="absolute inset-0 h-full w-full rounded-[1.5rem] object-cover"
                       />
 
-                      
-                      
-
-                      
-                      
                       <div className="absolute left-[5px] top-[270px]">
-                      
-                        <div className="flex h-[95px] w-[23px] flex-col items-center justify-center rounded-[28px] bg-[#1A318A] text-lg font-bold text-white leading-none">
+                        <div className="flex h-[95px] w-[23px] flex-col items-center justify-center rounded-[28px] bg-[#1A318A] text-lg font-bold leading-none text-white">
                           <span>G</span>
                           <span>A</span>
                           <span>T</span>
-                          <span>E</span>  
+                          <span>E</span>
                         </div>
                       </div>
-
-                      
-                      
 
                       {movingCarPoint && (
                         <div
@@ -793,13 +733,11 @@ export default function EngineeringFacultyLotPage() {
                             left: movingCarPoint.x,
                             top: movingCarPoint.y,
                             transform: "translate(-50%, -50%)",
-
                           }}
                         >
                           <CarIcon />
                         </div>
-                        
-                      )}                      
+                      )}
 
                       <div className="absolute inset-0">
                         {structuredRows.map((row) => {
@@ -854,13 +792,11 @@ export default function EngineeringFacultyLotPage() {
                                 )}
 
                                 {isFree ? (
-                                  <>  
-                                      
-                                    <span className="text-[9px] font-semibold text-[#2E7B50] leading-none">
+                                  <>
+                                    <span className="text-[9px] font-semibold leading-none text-[#2E7B50]">
                                       FREE
                                     </span>
-                                    <span className="mt-[2px] text-[9px] font-medium text-[#2F4F4F] leading-none">
-                                    
+                                    <span className="mt-[2px] text-[9px] font-medium leading-none text-[#2F4F4F]">
                                       {spot.id}
                                     </span>
                                   </>
@@ -902,7 +838,9 @@ export default function EngineeringFacultyLotPage() {
               <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-[#F8EAB7] text-4xl">
                 {weather.icon}
               </div>
-              <p className="text-2xl font-medium text-[#3D88B9]">Memphis Weather</p>
+              <p className="text-2xl font-medium text-[#3D88B9]">
+                Memphis Weather
+              </p>
               <p className="mt-2 text-base text-[#2F4F4F]">
                 {weather.label}
                 {weather.temp !== null ? ` • ${weather.temp}°F` : ""}
@@ -953,7 +891,9 @@ export default function EngineeringFacultyLotPage() {
                 </div>
                 <div className="flex items-center justify-between rounded-xl bg-[#FDEAEA] px-4 py-3">
                   <span>Occupied</span>
-                  <span className="font-bold text-[#D9534F]">{stats.occupied}</span>
+                  <span className="font-bold text-[#D9534F]">
+                    {stats.occupied}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between rounded-xl bg-[#EEF3FA] px-4 py-3">
                   <span>Total</span>

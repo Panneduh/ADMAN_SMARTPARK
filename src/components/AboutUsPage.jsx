@@ -88,7 +88,10 @@ export default function AboutUsPage() {
         </section>
 
         {/* Senior Design */}
-        <section className="mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]">
+        <section
+          id="senior-design"
+          className="mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
+        >
           <figure className="rounded-[2rem] border border-[#E6C4B7] bg-white/75 p-4 shadow-sm">
             <div className="overflow-hidden rounded-[1.5rem] border-2 border-dashed border-[#E6C4B7] bg-[#F2ECE1]">
               <img
@@ -123,7 +126,10 @@ export default function AboutUsPage() {
         </section>
 
         {/* Abstract */}
-        <section className="mt-14 grid items-center gap-10 md:grid-cols-[0.95fr_1.05fr]">
+        <section
+          id="abstract"
+          className="mt-14 grid items-center gap-10 md:grid-cols-[0.95fr_1.05fr]"
+        >
           <div className="order-2 md:order-1">
             <h2 className="font-serif text-4xl text-[#6F4A2E]">
               Project Abstract
@@ -161,7 +167,10 @@ export default function AboutUsPage() {
         </section>
 
         {/* Problem Statement */}
-        <section className="mt-14 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]">
+        <section
+          id="problem-statement"
+          className="mt-14 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
+        >
           <figure className="rounded-[2rem] border border-[#E6C4B7] bg-white/75 p-4 shadow-sm">
             <div className="overflow-hidden rounded-[1.5rem] border-2 border-dashed border-[#E6C4B7] bg-[#F2ECE1]">
               <img

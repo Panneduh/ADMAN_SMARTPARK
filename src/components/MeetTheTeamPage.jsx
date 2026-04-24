@@ -21,9 +21,9 @@ const teamMembers = [
   },
   {
     name: "Amairani Solis",
-    role: "Algorithm Developer & Front-End",
+    role: "AI Engineer & Front-End Developer",
     description:
-      "Developed the model for determining parking occupancy, designed the front-end, and managed external communications.",
+    "Designed and developed the complete parking occupancy detection model, implemented the core system logic, built the front-end interface, and managed external communications to support project coordination and deployment.",
   },
   {
     name: "Matthew Anderson Kelly",
