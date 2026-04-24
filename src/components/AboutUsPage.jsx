@@ -1,7 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function AboutUsPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const id = location.hash.replace("#", "");
+
+    setTimeout(() => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }, [location]);
 
   return (
     <div className="min-h-screen bg-[#F2ECE1] text-[#2F4F4F]">
@@ -90,7 +108,7 @@ export default function AboutUsPage() {
         {/* Senior Design */}
         <section
           id="senior-design"
-          className="mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
+          className="scroll-mt-24 mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
         >
           <figure className="rounded-[2rem] border border-[#E6C4B7] bg-white/75 p-4 shadow-sm">
             <div className="overflow-hidden rounded-[1.5rem] border-2 border-dashed border-[#E6C4B7] bg-[#F2ECE1]">
@@ -128,7 +146,7 @@ export default function AboutUsPage() {
         {/* Abstract */}
         <section
           id="abstract"
-          className="mt-14 grid items-center gap-10 md:grid-cols-[0.95fr_1.05fr]"
+          className="scroll-mt-24 mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
         >
           <div className="order-2 md:order-1">
             <h2 className="font-serif text-4xl text-[#6F4A2E]">
@@ -169,7 +187,7 @@ export default function AboutUsPage() {
         {/* Problem Statement */}
         <section
           id="problem-statement"
-          className="mt-14 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
+          className="scroll-mt-24 mt-12 grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr]"
         >
           <figure className="rounded-[2rem] border border-[#E6C4B7] bg-white/75 p-4 shadow-sm">
             <div className="overflow-hidden rounded-[1.5rem] border-2 border-dashed border-[#E6C4B7] bg-[#F2ECE1]">

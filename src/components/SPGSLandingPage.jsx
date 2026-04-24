@@ -156,34 +156,34 @@ export default function SPGSLandingPage() {
         </div>
 
         <div className="relative z-10 max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.42em] text-[#75B9BF] sm:text-base">
+          <p className="animate-fade-slide-up text-sm font-semibold uppercase tracking-[0.42em] text-[#75B9BF] sm:text-base">
             Welcome To
           </p>
 
-          <div className="mt-3 flex items-center justify-center gap-6 text-[#E6C4B7]">
+          <div className="animate-fade-slide-up animation-delay-200 mt-3 flex items-center justify-center gap-6 text-[#E6C4B7]">
             <span className="h-[2px] w-16 bg-[#E6C4B7]" />
             <span className="text-xl text-[#6F4A2E]">A</span>
             <span className="h-[2px] w-16 bg-[#E6C4B7]" />
           </div>
 
-          <h1 className="mt-6 font-serif text-6xl text-[#6F4A2E] sm:text-7xl md:text-8xl">
+          <h1 className="animate-fade-slide-up animation-delay-400 mt-6 font-serif text-6xl text-[#6F4A2E] sm:text-7xl md:text-8xl">
             S.P.G.S
           </h1>
 
-          <p className="mt-6 text-2xl font-medium tracking-[0.16em] text-[#6F4A2E] sm:text-3xl">
+          <p className="animate-fade-slide-up animation-delay-600 mt-6 text-2xl font-medium tracking-[0.16em] text-[#6F4A2E] sm:text-3xl">
             Smart Parking Guidance System
           </p>
 
-          <p className="mt-6 text-lg tracking-[0.22em] text-[#2F4F4F] sm:text-2xl">
+          <p className="animate-fade-slide-up animation-delay-800 mt-6 text-lg tracking-[0.22em] text-[#2F4F4F] sm:text-2xl">
             ADMAN Technologies
           </p>
 
           <button
-            onClick={() => navigate("/select-lot")}
-            className="mt-10 rounded-full border-2 border-[#E6C4B7] bg-[#FCDDD3] px-12 py-4 text-xl font-semibold tracking-[0.12em] text-[#6F4A2E] transition hover:scale-[1.03] hover:bg-[#E6C4B7]"
-          >
-            Start
-          </button>
+          onClick={() => navigate("/select-lot")}
+          className="animate-fade-slide-up animation-delay-800 mt-10 rounded-full border-2 border-[#E6C4B7] bg-[#FCDDD3] px-12 py-4 text-xl font-semibold tracking-[0.12em] text-[#6F4A2E] transition hover:scale-[1.03] hover:bg-[#E6C4B7]"
+        >
+          Start
+        </button>
         </div>
 
         <div className="relative z-10 mt-16 grid w-full max-w-3xl grid-cols-1 gap-4 md:hidden">
