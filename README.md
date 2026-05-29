@@ -104,13 +104,13 @@ Developed as part of the ADMAN SmartPark project by the University of Memphis Co
 
 Served as the primary team leader and project coordinator. Responsible for organizing meetings, assigning tasks, tracking project milestones, and ensuring the team remained on schedule. Facilitated communication among team members, monitored overall project progress, and helped maintain alignment between technical objectives and project requirements.
 
-**Amairani Solis – Project Communications and Documentation Lead**
+**Amairani Solis – Frontend Development and Project Communications Lead**
 
-Served as the primary spokesperson and liaison between the team, faculty mentors, and external stakeholders. Led the development and refinement of project documentation, presentations, and reports. Assisted with project planning, requirements analysis, and validation of project objectives while helping ensure clear communication of technical concepts to both technical and non-technical audiences.
+Served as the primary spokesperson and liaison between the team, faculty mentors, and external stakeholders. Led the design and development of the project's user-facing frontend, creating interfaces that allow users to view parking availability and interact with system data. Assisted with requirements gathering, documentation, presentations, and project planning while ensuring technical concepts and project progress were effectively communicated to both technical and non-technical audiences.
 
-**Aryan Prajapati – Systems Integration and Support Engineer**
+**Aryan Prajapati – Machine Learning and Support Engineer**
 
-Assisted with project planning, subsystem coordination, and integration efforts across the project. Supported hardware and software development activities, contributed to testing and validation efforts, and worked closely with team members to ensure compatibility between project components. Helped maintain project organization and provided technical support throughout development.
+Led the development and evaluation of the machine learning components used for parking space occupancy detection. Responsible for dataset preparation, model training, testing, performance analysis, and optimization of detection accuracy. Assisted with software integration efforts between the machine learning subsystem and the broader Smart Parking System while contributing to testing, validation, and overall system development.
 
 **Noah T. McDaniel – Systems Architect and Lead Engineer**
 
