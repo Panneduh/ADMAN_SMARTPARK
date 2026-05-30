@@ -2,7 +2,7 @@
 
 ## Overview
 
-Adman SmartPark is a smart parking management system designed to provide real-time parking space monitoring, gate access control, and occupancy reporting. This branch contains the services responsible for collecting sensor data, processing parking events, managing device communication, and serving data to frontend applications.
+This project is an AI-driven smart parking management system designed to provide real-time parking space detection that allows users to find spaces and park more efficiently. This branch contains the services responsible for collecting sensor data, processing parking events, managing device communication, and serving data to frontend applications.
 
 The backend acts as the central communication layer between distributed parking lot hardware nodes and the user-facing dashboard, enabling reliable monitoring of parking availability and system status.
 
