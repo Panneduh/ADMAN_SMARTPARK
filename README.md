@@ -26,7 +26,7 @@ The backend acts as the central communication layer between distributed parking 
 ### Hardware Layer
 
 * Raspberry Pi Zero 2 with optocoupler monitors the gate relay's status
-* Raspberry Pi 4W with IP camera overlooks parking lot and sends pictures to the live server running the backend
+* Raspberry Pi 4W with IP camera overlooks parking lot and sends pictures to our live server running the backend
 
 ### Backend Layer
 
